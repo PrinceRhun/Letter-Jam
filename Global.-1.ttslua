@@ -1,0 +1,1453 @@
+--[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
+#include deal
+
+wordWhite = {}
+wordWhite[1] = ""
+wordWhite[2] = ""
+wordWhite[3] = ""
+wordWhite[4] = ""
+wordWhite["5"] = ""
+wordRed = {}
+wordRed["1"] = ""
+wordRed["2"] = ""
+wordRed["3"] = ""
+wordRed["4"] = ""
+wordRed["5"] = ""
+wordYellow = {}
+wordYellow["1"] = ""
+wordYellow["2"] = ""
+wordYellow["3"] = ""
+wordYellow["4"] = ""
+wordYellow["5"] = ""
+wordGreen = {}
+wordGreen[1] = ""
+wordGreen[2] = ""
+wordGreen[3] = ""
+wordGreen[4] = ""
+wordGreen[5] = ""
+wordBlue = {}
+wordBlue[1] = ""
+wordBlue[2] = ""
+wordBlue[3] = ""
+wordBlue[4] = ""
+wordBlue[5] = ""
+wordPink = {}
+wordPink["1"] = ""
+wordPink["2"] = ""
+wordPink["3"] = ""
+wordPink["4"] = ""
+wordPink["5"] = ""
+
+
+language = "English"
+
+cardBack = "http://cloud-3.steamusercontent.com/ugc/1019445966592578746/0864E255B870E3B8C1566BE45B0BCA2668E0B4F4/"
+card_faces = {}
+card_faces["a"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592577822/02EBFE92861F13E6E1C76867202881F353473F78/"
+card_faces["b"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592580468/930C32F2066CD810E5E2BC2B1A3A4AEF0B063B88/"
+card_faces["c"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592582012/4476A1C66F662A1E6631C25BE642C3866BD7C8E2/"
+card_faces["d"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592584065/BED66399AE6EEFBFAEC8AD8F143C037430CCE6A9/"
+card_faces["e"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592585176/EB0B6F8812FE13A7FBE76800C00C76740F1F5C1C/"
+card_faces["f"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592586209/ADAADB25DB7E24A1963D4452977FF63A40031139/"
+card_faces["g"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592587767/FFF31922BAE1E90AB3768009E03A38F6B1E09B5E/"
+card_faces["h"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592588927/03E5E40B071C2D1B07DCF70B284C94D12FC2585A/"
+card_faces["i"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592591390/B59CF8B32B6BD9E9438596BD821D284AF3F4841A/"
+card_faces["k"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592592573/74CFDA48AD4013ECA96C0A1EB8287374F221A379/"
+card_faces["l"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592593879/7E925A4A587079A65F3F9A25C6822786DF557373/"
+card_faces["m"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592595082/5D22FC7D41E51E1021FC6E2D682B904D2758207F/"
+card_faces["n"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592596059/AA0C89C4DC7EFDBCFAB921100806DBCA3EB8FDB4/"
+card_faces["o"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592597350/39D38E1B4FAE3149D4D211061CF54CC59B49EBCA/"
+card_faces["p"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592598439/7AD9396760C32FDCC2C4B25DB8E7477E1FE6FAB0/"
+card_faces["r"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592599956/9AD780CCEC252753D8875BA5B09B4C091E8E08F2/"
+card_faces["s"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592602260/824F3CFAAB48A1616C112EED39207841F6C444D6/"
+card_faces["t"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592601218/C60D8903CE70B2B9C06101492A2E648BFFFFF5D5/"
+card_faces["u"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592603626/9F6E447EED117D89A4771DD44F08A7FD59E9C4D8/"
+card_faces["w"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592604994/10618B7FB02A0B24E57D437CA672E4FDBFDFF784/"
+card_faces["y"] = "http://cloud-3.steamusercontent.com/ugc/1019445966592607219/78F10D0E4EA849062AF47BC16304C8C5CA7D1545/"
+card_faces["z"] = "http://cloud-3.steamusercontent.com/ugc/1340334450180372260/1BB24BBBDD6B5A90F5D65410B7B72E28B091EF8C/"
+
+--[[ The onLoad event is called after the game save finishes loading. --]]
+function wordErrorChecking(user, word, language)
+        errorCheck = 1
+        if word == nil then
+            errorCheck=-1
+            return errorCheck
+        end
+        local word = string.lower(word)
+        letterCheck = string.match(word, "j")
+        local color = user.color
+        if language == "English" then
+            if letterCheck == "j" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "q")
+            if letterCheck == "q" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "v")
+            if letterCheck == "v" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "x")
+            if letterCheck == "x" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "z")
+            if letterCheck == "z" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+        end
+        if language == "German" then
+            if letterCheck == "j" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "q")
+            if letterCheck == "q" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "v")
+            if letterCheck == "v" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "x")
+            if letterCheck == "x" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+            letterCheck = string.match(word, "z")
+            if letterCheck == "y" then
+                displayCheckWordFromColor(color)
+                errorCheck = -1
+            end
+        end
+        UI.setAttribute("wordFrom" .. color, "text", word)
+
+        return errorCheck
+end
+function displayCheckWordFromColor(color)
+    UI.setAttribute("wordFrom" .. color, "text", "nope.")
+end
+function hideWordBox(color)
+    UI.setAttribute("wordPanel" .. color, "active", "false")
+end
+function pickWordsUI(player)
+    hideWordBox(player.color)
+end
+function pickWords(user, color)
+    if UI.getAttribute("wordPanel".. color, "active") == "false" then
+        UI.setAttribute("wordPanel" .. color, "active", "true")
+    end
+end
+function wordConfirm(user)
+    word = UI.getAttribute("wordFrom" .. user.color, "text")
+    errorCode = wordErrorChecking(user, word, language)
+    if errorCode == 1 then
+        if string.len(word) == 5 then
+            pickWordsUI(user)
+            createCards(string.sub(word, 1, 1), user.color, 1)
+            createCards(string.sub(word, 2, 2), user.color, 2)
+            createCards(string.sub(word, 3, 3), user.color, 3)
+            createCards(string.sub(word, 4, 4), user.color, 4)
+            createCards(string.sub(word, 5, 5), user.color, 5)
+        else
+            UI.setAttribute("wordFrom" .. user.color, "text", "")
+            UI.setAttribute("wordFrom" .. user.color, "placeholder", "five letters")
+        end
+    else
+        UI.setAttribute("wordFrom" .. user.color, "text", "")
+        UI.setAttribute("wordFrom" .. user.color, "placeholder", "Nope.")
+    end
+end
+function createCards(index, color, number)
+    newObj = spawnObject({type = "card"})
+    newObj.setCustomObject({
+      face= card_faces[index],
+      back= cardBack
+
+    })
+    newObj.setScale({0.40, 1.00, 0.40})
+    if Player["White"].color == color then
+        newObj.setPosition({-3.00, 3.00, -10.19})
+        newObj.setRotation({0.00, 180.00, 180.00})
+        wordWhite[number] = newObj.getGUID()
+    end
+    if Player["Red"].color == color then
+        newObj.setPosition({-9.72, 3.00, -3.00})
+        newObj.setRotation({0.00, 240.00, 180.00})
+        wordRed[number] = newObj.getGUID()
+
+    end
+    if Player["Yellow"].color == color then
+        newObj.setPosition({-7.42, 3.00, 6.96})
+        newObj.setRotation({0.00, 300.00, 180.00})
+        wordYellow[number] = newObj.getGUID()
+
+    end
+    if Player["Green"].color == color then
+        newObj.setPosition({3.00, 3.00, 10.00})
+        newObj.setRotation({0.00, 0.00, 180.00})
+        wordGreen[number] = newObj.getGUID()
+    end
+    if Player["Blue"].color == color then
+        newObj.setPosition({10.18, 3.00, 1.98})
+        newObj.setRotation({0.00, 60.00, 180.00})
+        wordBlue[number] = newObj.getGUID()
+        print(wordBlue[number])
+    end
+    if Player["Pink"].color == color then
+        newObj.setPosition({7.00, 3.00, -7.50})
+        newObj.setRotation({0.00, 120.00, 180.00})
+        wordPink[number] = newObj.getGUID()
+    end
+end
+
+
+
+languageSettingsCard_GUID = '34f1cb'
+gameplayButtonsCard_GUID = 'ce6b92'
+
+redIndicator1_GUID = 'd00806'
+redIndicator2_GUID = 'f4e697'
+redIndicator3_GUID = '793b60'
+redIndicator4_GUID = '6c8319'
+redIndicator5_GUID = 'd7bf29'
+
+yellowIndicator1_GUID = 'c37742'
+yellowIndicator2_GUID = 'a83ae8'
+yellowIndicator3_GUID = '481ec0'
+yellowIndicator4_GUID = '0c06f4'
+yellowIndicator5_GUID = '8aafb1'
+
+greenIndicator1_GUID = '5c403c'
+greenIndicator2_GUID = 'b707bb'
+greenIndicator3_GUID = '1ef535'
+greenIndicator4_GUID = 'c63d47'
+greenIndicator5_GUID = '19f05f'
+
+blueIndicator1_GUID = '660d98'
+blueIndicator2_GUID = '8b5ad1'
+blueIndicator3_GUID = 'd3c9b5'
+blueIndicator4_GUID = '64b671'
+blueIndicator5_GUID = '2ea288'
+
+pinkIndicator1_GUID = '96de4e'
+pinkIndicator2_GUID = '850546'
+pinkIndicator3_GUID = 'ed8569'
+pinkIndicator4_GUID = 'dbffca'
+pinkIndicator5_GUID = 'dfb36d'
+
+whiteIndicator1_GUID = '46a8f7'
+whiteIndicator2_GUID = '5c4b2b'
+whiteIndicator3_GUID = '8f93cd'
+whiteIndicator4_GUID = '2af17b'
+whiteIndicator5_GUID = '539b33'
+setup = 0
+
+
+
+rulebook_GUID ='4520a8'
+deckZone_GUID = 'd5e0a4'
+centerPad_GUID = '1e7ac2'
+clueCard_GUID = '25f2b9'
+redToken1_GUID = 'f52c19'
+redToken2_GUID = 'ca6e48'
+redToken3_GUID = 'd30bc1'
+redToken4_GUID = '73dfa7'
+redToken5_GUID = '6b0ada'
+redToken6_GUID = 'd940fd'
+greenToken1_GUID = '9ebcb3'
+greenToken2_GUID = '6d820c'
+greenToken3_GUID = '4ced1c'
+greenToken4_GUID = 'ff0363'
+greenToken5_GUID = '9ed4b7'
+greenToken6_GUID = 'dedd86'
+greenToken7_GUID = 'd5d8f4'
+greenToken8_GUID = 'b7de55'
+greenToken9_GUID = '730bc7'
+Chip1_GUID = '22aee7'
+Chip2_GUID = 'a07477'
+Chip3_GUID = '0976a3'
+Chip4_GUID = 'f79292'
+Chip5_GUID = '0b82b2'
+Chip6_GUID = '44083e'
+Chip7_GUID = 'b1eb87'
+Chip8_GUID = '63a548'
+
+
+
+wordRedZone_GUID = '70c261'
+wordYellowZone_GUID = '4cd1cf'
+wordGreenZone_GUID = '394622'
+wordBlueZone_GUID = '8b8757'
+wordPinkZone_GUID = '5c758e'
+wordWhiteZone_GUID = '2df7fd'
+
+redChipSlot_GUID = '6cb050'
+yellowChipSlot_GUID = '10cc5f'
+greenChipSlot_GUID = '4f9ef9'
+blueChipSlot_GUID = 'c36428'
+pinkChipSlot_GUID = 'c52f54'
+whiteChipSlot_GUID = 'd644b2'
+
+
+languageSettingsEnglish_Parameters = {}
+languageSettingsEnglish_Parameters.click_function = 'setLanguageEnglish'
+languageSettingsEnglish_Parameters.function_owner = self
+languageSettingsEnglish_Parameters.label = 'English'
+languageSettingsEnglish_Parameters.position = {0,0.5,0.3}
+languageSettingsEnglish_Parameters.rotation = {0,0,0}
+languageSettingsEnglish_Parameters.width = 600
+languageSettingsEnglish_Parameters.height = 100
+languageSettingsEnglish_Parameters.visibility = 'Green'
+languageSettingsEnglish_Parameters.font_size = 100
+languageSettingsEnglish_Parameters.color  = {r=1, g=0, b=0}
+languageSettingsEnglish_Parameters.font_color  = {r=1, g=1, b=1}
+languageSettingsEnglish_Parameters.hover_color  = {r=1, g=0, b=0}
+
+
+languageSettingsGerman_Parameters = {}
+languageSettingsGerman_Parameters.click_function = 'setLanguageGerman'
+languageSettingsGerman_Parameters.function_owner = self
+languageSettingsGerman_Parameters.label = 'Deutsch'
+languageSettingsGerman_Parameters.position = {0,0.5,0.6}
+languageSettingsGerman_Parameters.rotation = {0,0,0}
+languageSettingsGerman_Parameters.width = 600
+languageSettingsGerman_Parameters.height = 100
+languageSettingsGerman_Parameters.visibility = 'Green'
+languageSettingsGerman_Parameters.font_size = 100
+languageSettingsGerman_Parameters.color  = {r=0, g=0, b=0}
+languageSettingsGerman_Parameters.font_color  = {r=1, g=1, b=1}
+languageSettingsGerman_Parameters.hover_color  = {r=1, g=0, b=0}
+
+
+resetChips_Parameters = {}
+resetChips_Parameters.click_function = 'setupChips'
+resetChips_Parameters.function_owner = self
+resetChips_Parameters.label = 'Reset Chips'
+resetChips_Parameters.position = {0,0.5,0.9}
+resetChips_Parameters.rotation = {0,0,0}
+resetChips_Parameters.width = 600
+resetChips_Parameters.height = 100
+resetChips_Parameters.font_size = 100
+resetChips_Parameters.color  = {r=0, g=0, b=0}
+resetChips_Parameters.font_color  = {r=1, g=1, b=1}
+
+setup_Parameters = {}
+setup_Parameters.click_function = 'setup'
+setup_Parameters.function_owner = self
+setup_Parameters.label = 'Setup'
+setup_Parameters.position = {0,0.5,0.6}
+setup_Parameters.rotation = {0,0,0}
+setup_Parameters.width = 600
+setup_Parameters.height = 100
+setup_Parameters.font_size = 100
+setup_Parameters.color  = {r=0, g=0, b=0}
+setup_Parameters.font_color  = {r=1, g=1, b=1}
+
+redProgress_Parameters = {}
+redProgress_Parameters.click_function = 'redProgress'
+redProgress_Parameters.function_owner = self
+redProgress_Parameters.label = 'Next'
+redProgress_Parameters.position = {5.5,0.05,4.5}
+redProgress_Parameters.rotation = {0,0,0}
+redProgress_Parameters.width = 500
+redProgress_Parameters.height = 300
+redProgress_Parameters.font_size = 200
+redProgress_Parameters.color  = {r=252/255, g=106/255, b=106/255}
+redProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+yellowProgress_Parameters = {}
+yellowProgress_Parameters.click_function = 'yellowProgress'
+yellowProgress_Parameters.function_owner = self
+yellowProgress_Parameters.label = 'Next'
+yellowProgress_Parameters.position = {5.5,0.05,4.5}
+yellowProgress_Parameters.rotation = {0,0,0}
+yellowProgress_Parameters.width = 500
+yellowProgress_Parameters.height = 300
+yellowProgress_Parameters.font_size = 200
+yellowProgress_Parameters.color  = {r=252/255, g=242/255, b=107/255}
+yellowProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+greenProgress_Parameters = {}
+greenProgress_Parameters.click_function = 'greenProgress'
+greenProgress_Parameters.function_owner = self
+greenProgress_Parameters.label = 'Next'
+greenProgress_Parameters.position = {5.5,0.05,4.5}
+greenProgress_Parameters.rotation = {0,0,0}
+greenProgress_Parameters.width = 500
+greenProgress_Parameters.height = 300
+greenProgress_Parameters.font_size = 200
+greenProgress_Parameters.color  = {r=138/255, g=253/255, b=108/255}
+greenProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+blueProgress_Parameters = {}
+blueProgress_Parameters.click_function = 'blueProgress'
+blueProgress_Parameters.function_owner = self
+blueProgress_Parameters.label = 'Next'
+blueProgress_Parameters.position = {5.5,0.05,4.5}
+blueProgress_Parameters.rotation = {0,0,0}
+blueProgress_Parameters.width = 500
+blueProgress_Parameters.height = 300
+blueProgress_Parameters.font_size = 200
+blueProgress_Parameters.color  = {r=48/255, g=113/255, b=180/255}
+blueProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+pinkProgress_Parameters = {}
+pinkProgress_Parameters.click_function = 'pinkProgress'
+pinkProgress_Parameters.function_owner = self
+pinkProgress_Parameters.label = 'Next'
+pinkProgress_Parameters.position = {5.5,0.05,4.5}
+pinkProgress_Parameters.rotation = {0,0,0}
+pinkProgress_Parameters.width = 500
+pinkProgress_Parameters.height = 300
+pinkProgress_Parameters.font_size = 200
+pinkProgress_Parameters.color  = {r=242/255, g=82/255, b=238/255}
+pinkProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+whiteProgress_Parameters = {}
+whiteProgress_Parameters.click_function = 'whiteProgress'
+whiteProgress_Parameters.function_owner = self
+whiteProgress_Parameters.label = 'Next'
+whiteProgress_Parameters.position = {5.5,0.05,4.5}
+whiteProgress_Parameters.rotation = {0,0,0}
+whiteProgress_Parameters.width = 500
+whiteProgress_Parameters.height = 300
+whiteProgress_Parameters.font_size = 200
+whiteProgress_Parameters.color  = {r=1, g=1, b=1}
+whiteProgress_Parameters.font_color  = {r=0, g=0, b=0}
+
+pickWords_Parameters = {}
+pickWords_Parameters.click_function = 'pickWords'
+pickWords_Parameters.function_owner = self
+pickWords_Parameters.label = 'Pick Words'
+pickWords_Parameters.position = {0,0.5,0.3}
+pickWords_Parameters.rotation = {0,0,0}
+pickWords_Parameters.width = 600
+pickWords_Parameters.height = 100
+pickWords_Parameters.font_size = 100
+pickWords_Parameters.color  = {r=0, g=0, b=0}
+pickWords_Parameters.font_color  = {r=1, g=1, b=1}
+
+
+--[[ The onLoad event is called after the game save finishes loading. --]]
+function onLoad()
+    hideWordBox("Red")
+    hideWordBox("Yellow")
+    hideWordBox("Green")
+    hideWordBox("Blue")
+    hideWordBox("Pink")
+    hideWordBox("White")
+
+    rulebook = getObjectFromGUID(rulebook_GUID)
+    deckZone = getObjectFromGUID(deckZone_GUID)
+    wordRedZone = getObjectFromGUID(wordRedZone_GUID)
+    wordYellowZone = getObjectFromGUID(wordYellowZone_GUID)
+    wordGreenZone = getObjectFromGUID(wordGreenZone_GUID)
+    wordBlueZone = getObjectFromGUID(wordBlueZone_GUID)
+    wordPinkZone = getObjectFromGUID(wordPinkZone_GUID)
+    wordWhiteZone = getObjectFromGUID(wordWhiteZone_GUID)
+
+    redToken1 = getObjectFromGUID(redToken1_GUID)
+    redToken2 = getObjectFromGUID(redToken2_GUID)
+    redToken3 = getObjectFromGUID(redToken3_GUID)
+    redToken4 = getObjectFromGUID(redToken4_GUID)
+    redToken5 = getObjectFromGUID(redToken5_GUID)
+    redToken6 = getObjectFromGUID(redToken6_GUID)
+
+    redIndicator1 = getObjectFromGUID(redIndicator1_GUID)
+    redIndicator2 = getObjectFromGUID(redIndicator2_GUID)
+    redIndicator3 = getObjectFromGUID(redIndicator3_GUID)
+    redIndicator4 = getObjectFromGUID(redIndicator4_GUID)
+    redIndicator5 = getObjectFromGUID(redIndicator5_GUID)
+
+    yellowIndicator1 = getObjectFromGUID(yellowIndicator1_GUID)
+    yellowIndicator2 = getObjectFromGUID(yellowIndicator2_GUID)
+    yellowIndicator3 = getObjectFromGUID(yellowIndicator3_GUID)
+    yellowIndicator4 = getObjectFromGUID(yellowIndicator4_GUID)
+    yellowIndicator5 = getObjectFromGUID(yellowIndicator5_GUID)
+
+    greenIndicator1 = getObjectFromGUID(greenIndicator1_GUID)
+    greenIndicator2 = getObjectFromGUID(greenIndicator2_GUID)
+    greenIndicator3 = getObjectFromGUID(greenIndicator3_GUID)
+    greenIndicator4 = getObjectFromGUID(greenIndicator4_GUID)
+    greenIndicator5 = getObjectFromGUID(greenIndicator5_GUID)
+
+    blueIndicator1 = getObjectFromGUID(blueIndicator1_GUID)
+    blueIndicator2 = getObjectFromGUID(blueIndicator2_GUID)
+    blueIndicator3 = getObjectFromGUID(blueIndicator3_GUID)
+    blueIndicator4 = getObjectFromGUID(blueIndicator4_GUID)
+    blueIndicator5 = getObjectFromGUID(blueIndicator5_GUID)
+
+    pinkIndicator1 = getObjectFromGUID(pinkIndicator1_GUID)
+    pinkIndicator2 = getObjectFromGUID(pinkIndicator2_GUID)
+    pinkIndicator3 = getObjectFromGUID(pinkIndicator3_GUID)
+    pinkIndicator4 = getObjectFromGUID(pinkIndicator4_GUID)
+    pinkIndicator5 = getObjectFromGUID(pinkIndicator5_GUID)
+
+    whiteIndicator1 = getObjectFromGUID(whiteIndicator1_GUID)
+    whiteIndicator2 = getObjectFromGUID(whiteIndicator2_GUID)
+    whiteIndicator3 = getObjectFromGUID(whiteIndicator3_GUID)
+    whiteIndicator4 = getObjectFromGUID(whiteIndicator4_GUID)
+    whiteIndicator5 = getObjectFromGUID(whiteIndicator5_GUID)
+
+
+    greenToken1 = getObjectFromGUID(greenToken1_GUID)
+    greenToken2 = getObjectFromGUID(greenToken2_GUID)
+    greenToken3 = getObjectFromGUID(greenToken3_GUID)
+    greenToken4 = getObjectFromGUID(greenToken4_GUID)
+    greenToken5 = getObjectFromGUID(greenToken5_GUID)
+    greenToken6 = getObjectFromGUID(greenToken6_GUID)
+    greenToken7 = getObjectFromGUID(greenToken7_GUID)
+    greenToken8 = getObjectFromGUID(greenToken8_GUID)
+    greenToken9 = getObjectFromGUID(greenToken9_GUID)
+
+    Chip1 = getObjectFromGUID(Chip1_GUID)
+    Chip2 = getObjectFromGUID(Chip2_GUID)
+    Chip3 = getObjectFromGUID(Chip3_GUID)
+    Chip4 = getObjectFromGUID(Chip4_GUID)
+    Chip5 = getObjectFromGUID(Chip5_GUID)
+    Chip6 = getObjectFromGUID(Chip6_GUID)
+    Chip7 = getObjectFromGUID(Chip7_GUID)
+    Chip8 = getObjectFromGUID(Chip8_GUID)
+
+    languageSettingsCard = getObjectFromGUID(languageSettingsCard_GUID)
+    gameplayButtonsCard = getObjectFromGUID(gameplayButtonsCard_GUID)
+
+    clueCard = getObjectFromGUID(clueCard_GUID)
+    centerPad = getObjectFromGUID(centerPad_GUID)
+    redChipSlot = getObjectFromGUID(redChipSlot_GUID)
+    yellowChipSlot = getObjectFromGUID(yellowChipSlot_GUID)
+    greenChipSlot = getObjectFromGUID(greenChipSlot_GUID)
+    blueChipSlot = getObjectFromGUID(blueChipSlot_GUID)
+    pinkChipSlot = getObjectFromGUID(pinkChipSlot_GUID)
+    whiteChipSlot = getObjectFromGUID(whiteChipSlot_GUID)
+
+    languageSettingsCard.createButton(languageSettingsEnglish_Parameters)
+    English = 0
+    languageSettingsCard.createButton(languageSettingsGerman_Parameters)
+    German = 1
+
+    gameplayButtonsCard.createButton(resetChips_Parameters)
+    gameplayButtonsCard.createButton(setup_Parameters)
+    gameplayButtonsCard.createButton(pickWords_Parameters)
+    redChipSlot.createButton(redProgress_Parameters)
+    yellowChipSlot.createButton(yellowProgress_Parameters)
+    greenChipSlot.createButton(greenProgress_Parameters)
+    blueChipSlot.createButton(blueProgress_Parameters)
+    pinkChipSlot.createButton(pinkProgress_Parameters)
+    whiteChipSlot.createButton(whiteProgress_Parameters)
+
+    redLettersFlipped = 0
+    yellowLettersFlipped = 0
+    greenLettersFlipped = 0
+    blueLettersFlipped = 0
+    pinkLettersFlipped = 0
+    whiteLettersFlipped = 0
+
+
+end
+function setLanguageEnglish()
+    language = "English"
+    print(language .. " is now the active language!")
+    languageSettingsCard.editButton({
+        index = English,
+        color = {r=1, g=0, b=0}
+    })
+    languageSettingsCard.editButton({
+        index = German,
+        color = {r=0, g=0, b=0}
+    })
+    UI.setAttribute("wordFromRed", "placeholder", "No J,Q,V,X,Z.")
+    UI.setAttribute("wordFromYellow", "placeholder", "No J,Q,V,X,Z.")
+    UI.setAttribute("wordFromGreen", "placeholder", "No J,Q,V,X,Z.")
+    UI.setAttribute("wordFromBlue", "placeholder", "No J,Q,V,X,Z.")
+    UI.setAttribute("wordFromPink", "placeholder", "No J,Q,V,X,Z.")
+    UI.setAttribute("wordFromWhite", "placeholder", "No J,Q,V,X,Z.")
+
+end
+function setLanguageGerman()
+    language = "Deutsch"
+    print(language.. " is now the active language!")
+    languageSettingsCard.editButton({
+        index = English,
+        color = {r=0, g=0, b=0}
+    })
+    languageSettingsCard.editButton({
+        index = German,
+        color = {r=1, g=0, b=0}
+    })
+    UI.setAttribute("wordFromRed", "placeholder", "Kein J,Q,V,X,Y.")
+    UI.setAttribute("wordFromYellow", "placeholder", "Kein J,Q,V,X,Y.")
+    UI.setAttribute("wordFromGreen", "placeholder", "Kein J,Q,V,X,Y.")
+    UI.setAttribute("wordFromBlue", "placeholder", "Kein J,Q,V,X,Y.")
+    UI.setAttribute("wordFromPink", "placeholder", "Kein J,Q,V,X,Y.")
+    UI.setAttribute("wordFromWhite", "placeholder", "Kein J,Q,V,X,Y.")
+
+end
+function setupChips()
+    Chip1.setPosition({-2.25, 1.71, -5})
+    Chip1.setRotation({0.00, 180.00, 0.00})
+    Chip2.setPosition({-0.75, 1.71, -5})
+    Chip2.setRotation({0.00, 180.00, 0.00})
+    Chip3.setPosition({0.75, 1.71, -5})
+    Chip3.setRotation({0.00, 180.00, 0.00})
+    Chip4.setPosition({2.25, 1.71, -5})
+    Chip4.setRotation({0.00, 180.00, 0.00})
+    Chip5.setPosition({-2.25, 1.71, -6.5})
+    Chip5.setRotation({0.00, 180.00, 0.00})
+    Chip6.setPosition({-0.75, 1.71, -6.5})
+    Chip6.setRotation({0.00, 180.00, 0.00})
+    Chip7.setPosition({0.75, 1.71, -6.5})
+    Chip7.setRotation({0.00, 180.00, 0.00})
+    Chip8.setPosition({2.25, 1.71, -6.5})
+    Chip8.setRotation({0.00, 180.00, 0.00})
+end
+
+function setup()
+    rulebook.setPosition({7, 0.96, 0.00})
+    setupChips()
+    local seatedPlayers = 0
+    if Player["White"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if Player["Red"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if Player["Yellow"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if Player["Green"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if Player["Blue"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if Player["Pink"].seated then
+        seatedPlayers = seatedPlayers + 1
+    end
+    if seatedPlayers == 2 then
+        players_2()
+        passAllWords()
+        setup = 1
+    elseif seatedPlayers == 3 then
+        players_3()
+        passAllWords()
+        setup = 1
+    elseif seatedPlayers == 4 then
+        players_4()
+        passAllWords()
+        setup = 1
+    elseif seatedPlayers == 5 then
+        players_5()
+        passAllWords()
+        setup = 1
+    elseif seatedPlayers == 6 then
+        players_6()
+        passAllWords()
+        setup = 1
+    else
+        print("Invalid player count.")
+    end
+end
+function passAllWords()
+    if Player["White"].seated and wordWhiteZone.getObjects() then
+        passWord(Player["White"])
+    end
+    if Player["Red"].seated and wordRedZone.getObjects() then
+        passWord(Player["Red"])
+    end
+    if Player["Yellow"].seated and wordYellowZone.getObjects() then
+        passWord(Player["Yellow"])
+    end
+    if Player["Green"].seated and wordGreenZone.getObjects() then
+        passWord(Player["Green"])
+    end
+    if Player["Blue"].seated and wordBlueZone.getObjects() then
+        passWord(Player["Blue"])
+    end
+    if Player["Pink"].seated and wordPinkZone.getObjects() then
+        passWord(Player["Pink"])
+    end
+end
+
+function passWord(givingPlayer)
+    if givingPlayer == Player["White"] then
+        passedDeck = wordWhiteZone.getObjects()
+        passedWord = passedDeck[1]
+        --passedword.randomize()
+        if Player["Red"].seated then
+            redLetter1 = passedWord.takeObject({position = {-11.23, 3, -3.80}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter2 = passedWord.takeObject({position = {-10.63, 3, -4.79}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter3 = passedWord.takeObject({position = {-10.03, 3, -5.83}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter4 = passedWord.takeObject({position = {-9.44, 3, -6.87}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter5 = passedWord.takeObject({position = {-8.86, 3, -7.88}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            Wait.frames(function() redLetter1.flip() end, 100)
+        elseif Player["Yellow"].seated then
+            yellowLetter1 = passedWord.takeObject({position = {-8.89, 1.03, 7.82}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter2 = passedWord.takeObject({position = {-9.52, 1.03, 6.78}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter3 = passedWord.takeObject({position = {-10.10, 1.03, 5.74}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter4 = passedWord.takeObject({position = {-10.69, 1.03, 4.70}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter5 = passedWord.takeObject({position = {-11.27, 1.03, 3.68}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            Wait.frames(function() yellowLetter1.flip() end, 100)
+        elseif Player["Green"].seated then
+            greenLetter1 = passedWord.takeObject({position = {2.27, 1.03, 11.61}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter2 = passedWord.takeObject({position = {1.13, 1.03, 11.60}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter3 = passedWord.takeObject({position = {-0.05, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter4 = passedWord.takeObject({position = {-1.21, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter5 = passedWord.takeObject({position = {-2.20, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            Wait.frames(function() greenLetter1.flip() end, 100)
+        elseif Player["Blue"].seated then
+            blueLetter1 = passedWord.takeObject({position = {11.27, 1.03, 3.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter2 = passedWord.takeObject({position = {10.64, 1.03, 4.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter3 = passedWord.takeObject({position = {10.04, 1.03, 5.90}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter4 = passedWord.takeObject({position = {9.48, 1.03, 6.84}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter5 = passedWord.takeObject({position = {8.91, 1.03, 7.77}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            Wait.frames(function() blueLetter1.flip() end, 100)
+        elseif Player["Pink"].seated then
+            pinkLetter1 = passedWord.takeObject({position = {9.04, 1.03, -7.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter2 = passedWord.takeObject({position = {9.61, 1.03, -6.70}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter3 = passedWord.takeObject({position = {10.18, 1.03, -5.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter4 = passedWord.takeObject({position = {10.74, 1.03, -4.73}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter5 = passedWord.takeObject({position = {11.29, 1.03, -3.79}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            Wait.frames(function() pinkLetter1.flip() end, 100)
+        elseif Player["White"].seated then
+            passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        end
+    elseif givingPlayer == Player["Red"] then
+        passedDeck = wordRedZone.getObjects()
+        passedWord = passedDeck[1]
+        if Player["Yellow"].seated then
+            yellowLetter1 = passedWord.takeObject({position = {-8.89, 1.03, 7.82}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter2 = passedWord.takeObject({position = {-9.52, 1.03, 6.78}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter3 = passedWord.takeObject({position = {-10.10, 1.03, 5.74}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter4 = passedWord.takeObject({position = {-10.69, 1.03, 4.70}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter5 = passedWord.takeObject({position = {-11.27, 1.03, 3.68}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            Wait.frames(function() yellowLetter1.flip() end, 100)
+        elseif Player["Green"].seated then
+            greenLetter1 = passedWord.takeObject({position = {2.27, 1.03, 11.61}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter2 = passedWord.takeObject({position = {1.13, 1.03, 11.60}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter3 = passedWord.takeObject({position = {-0.05, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter4 = passedWord.takeObject({position = {-1.21, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter5 = passedWord.takeObject({position = {-2.20, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            Wait.frames(function() greenLetter1.flip() end, 100)
+        elseif Player["Blue"].seated then
+            blueLetter1 = passedWord.takeObject({position = {11.27, 1.03, 3.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter2 = passedWord.takeObject({position = {10.64, 1.03, 4.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter3 = passedWord.takeObject({position = {10.04, 1.03, 5.90}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter4 = passedWord.takeObject({position = {9.48, 1.03, 6.84}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter5 = passedWord.takeObject({position = {8.91, 1.03, 7.77}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            Wait.frames(function() blueLetter1.flip() end, 100)
+        elseif Player["Pink"].seated then
+            pinkLetter1 = passedWord.takeObject({position = {9.04, 1.03, -7.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter2 = passedWord.takeObject({position = {9.61, 1.03, -6.70}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter3 = passedWord.takeObject({position = {10.18, 1.03, -5.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter4 = passedWord.takeObject({position = {10.74, 1.03, -4.73}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter5 = passedWord.takeObject({position = {11.29, 1.03, -3.79}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            Wait.frames(function() pinkLetter1.flip() end, 100)
+        elseif Player["White"].seated then
+            whiteLetter1 = passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter2 = passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter3 = passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter4 = passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter5 = passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        end
+    elseif givingPlayer == Player["Yellow"] then
+        passedDeck = wordYellowZone.getObjects()
+        passedWord = passedDeck[1]
+        if Player["Green"].seated then
+            greenLetter1 = passedWord.takeObject({position = {2.27, 1.03, 11.61}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter2 = passedWord.takeObject({position = {1.13, 1.03, 11.60}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter3 = passedWord.takeObject({position = {-0.05, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter4 = passedWord.takeObject({position = {-1.21, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter5 = passedWord.takeObject({position = {-2.20, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            Wait.frames(function() greenLetter1.flip() end, 100)
+        elseif Player["Blue"].seated then
+            blueLetter1 = passedWord.takeObject({position = {11.27, 1.03, 3.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter2 = passedWord.takeObject({position = {10.64, 1.03, 4.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter3 = passedWord.takeObject({position = {10.04, 1.03, 5.90}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter4 = passedWord.takeObject({position = {9.48, 1.03, 6.84}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter5 = passedWord.takeObject({position = {8.91, 1.03, 7.77}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            Wait.frames(function() blueLetter1.flip() end, 100)
+        elseif Player["Pink"].seated then
+            pinkLetter1 = passedWord.takeObject({position = {9.04, 1.03, -7.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter2 = passedWord.takeObject({position = {9.61, 1.03, -6.70}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter3 = passedWord.takeObject({position = {10.18, 1.03, -5.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter4 = passedWord.takeObject({position = {10.74, 1.03, -4.73}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter5 = passedWord.takeObject({position = {11.29, 1.03, -3.79}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            Wait.frames(function() pinkLetter1.flip() end, 100)
+        elseif Player["White"].seated then
+            whiteLetter1 = passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter2 = passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter3 = passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter4 = passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter5 = passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        elseif Player["Red"].seated then
+            redLetter1 = passedWord.takeObject({position = {-11.23, 3, -3.80}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter2 = passedWord.takeObject({position = {-10.63, 3, -4.79}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter3 = passedWord.takeObject({position = {-10.03, 3, -5.83}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter4 = passedWord.takeObject({position = {-9.44, 3, -6.87}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter5 = passedWord.takeObject({position = {-8.86, 3, -7.88}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            Wait.frames(function() redLetter1.flip() end, 100)
+        end
+    elseif givingPlayer == Player["Green"] then
+        passedDeck = wordGreenZone.getObjects()
+        passedWord = passedDeck[1]
+        if Player["Blue"].seated then
+            blueLetter1 = passedWord.takeObject({position = {11.27, 1.03, 3.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter2 = passedWord.takeObject({position = {10.64, 1.03, 4.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter3 = passedWord.takeObject({position = {10.04, 1.03, 5.90}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter4 = passedWord.takeObject({position = {9.48, 1.03, 6.84}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter5 = passedWord.takeObject({position = {8.91, 1.03, 7.77}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            Wait.frames(function() blueLetter1.flip() end, 100)
+        elseif Player["Pink"].seated then
+            pinkLetter1 = passedWord.takeObject({position = {9.04, 1.03, -7.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter2 = passedWord.takeObject({position = {9.61, 1.03, -6.70}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter3 = passedWord.takeObject({position = {10.18, 1.03, -5.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter4 = passedWord.takeObject({position = {10.74, 1.03, -4.73}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter5 = passedWord.takeObject({position = {11.29, 1.03, -3.79}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            Wait.frames(function() pinkLetter1.flip() end, 100)
+        elseif Player["White"].seated then
+            whiteLetter1 = passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter2 = passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter3 = passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter4 = passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter5 = passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        elseif Player["Red"].seated then
+            redLetter1 = passedWord.takeObject({position = {-11.23, 3, -3.80}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter2 = passedWord.takeObject({position = {-10.63, 3, -4.79}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter3 = passedWord.takeObject({position = {-10.03, 3, -5.83}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter4 = passedWord.takeObject({position = {-9.44, 3, -6.87}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter5 = passedWord.takeObject({position = {-8.86, 3, -7.88}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            Wait.frames(function() redLetter1.flip() end, 100)
+        elseif Player["Yellow"].seated then
+            yellowLetter1 = passedWord.takeObject({position = {-8.89, 1.03, 7.82}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter2 = passedWord.takeObject({position = {-9.52, 1.03, 6.78}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter3 = passedWord.takeObject({position = {-10.10, 1.03, 5.74}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter4 = passedWord.takeObject({position = {-10.69, 1.03, 4.70}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter5 = passedWord.takeObject({position = {-11.27, 1.03, 3.68}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            Wait.frames(function() yellowLetter1.flip() end, 100)
+        end
+    elseif givingPlayer == Player["Blue"] then
+        passedDeck = wordBlueZone.getObjects()
+        passedWord = passedDeck[1]
+        if Player["Pink"].seated then
+            pinkLetter1 = passedWord.takeObject({position = {9.04, 1.03, -7.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter2 = passedWord.takeObject({position = {9.61, 1.03, -6.70}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter3 = passedWord.takeObject({position = {10.18, 1.03, -5.72}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter4 = passedWord.takeObject({position = {10.74, 1.03, -4.73}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            pinkLetter5 = passedWord.takeObject({position = {11.29, 1.03, -3.79}, rotation = {x=0.00, y=300.00, z=180.00}, index = 1})
+            Wait.frames(function() pinkLetter1.flip() end, 100)
+        elseif Player["White"].seated then
+            whiteLetter1 = passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter2 = passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter3 = passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter4 = passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter5 = passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        elseif Player["Red"].seated then
+            redLetter1 = passedWord.takeObject({position = {-11.23, 3, -3.80}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter2 = passedWord.takeObject({position = {-10.63, 3, -4.79}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter3 = passedWord.takeObject({position = {-10.03, 3, -5.83}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter4 = passedWord.takeObject({position = {-9.44, 3, -6.87}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter5 = passedWord.takeObject({position = {-8.86, 3, -7.88}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            Wait.frames(function() redLetter1.flip() end, 100)
+        elseif Player["Yellow"].seated then
+            yellowLetter1 = passedWord.takeObject({position = {-8.89, 1.03, 7.82}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter2 = passedWord.takeObject({position = {-9.52, 1.03, 6.78}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter3 = passedWord.takeObject({position = {-10.10, 1.03, 5.74}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter4 = passedWord.takeObject({position = {-10.69, 1.03, 4.70}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter5 = passedWord.takeObject({position = {-11.27, 1.03, 3.68}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            Wait.frames(function() yellowLetter1.flip() end, 100)
+        elseif Player["Green"].seated then
+            greenLetter1 = passedWord.takeObject({position = {2.27, 1.03, 11.61}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter2 = passedWord.takeObject({position = {1.13, 1.03, 11.60}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter3 = passedWord.takeObject({position = {-0.05, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter4 = passedWord.takeObject({position = {-1.21, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter5 = passedWord.takeObject({position = {-2.20, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            Wait.frames(function() greenLetter1.flip() end, 100)
+        end
+    elseif givingPlayer == Player["Pink"] then
+        passedDeck = wordPinkZone.getObjects()
+        passedWord = passedDeck[1]
+        if Player["White"].seated then
+            whiteLetter1 = passedWord.takeObject({position = {-2.32, 1.03, -11.76}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter2 = passedWord.takeObject({position = {-1.17, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter3 = passedWord.takeObject({position = {0.00, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter4 = passedWord.takeObject({position = {1.14, 1.03, -11.78}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            whiteLetter5 = passedWord.takeObject({position = {2.23, 1.03, -11.77}, rotation = {x=0.00, y=0.00, z=180.00}, index = 1})
+            Wait.frames(function() whiteLetter1.flip() end, 100)
+        elseif Player["Red"].seated then
+            redLetter1 = passedWord.takeObject({position = {-11.23, 3, -3.80}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter2 = passedWord.takeObject({position = {-10.63, 3, -4.79}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter3 = passedWord.takeObject({position = {-10.03, 3, -5.83}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter4 = passedWord.takeObject({position = {-9.44, 3, -6.87}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            redLetter5 = passedWord.takeObject({position = {-8.86, 3, -7.88}, rotation = {x=0.00, y=60.00, z=180.00}, index = 1})
+            Wait.frames(function() redLetter1.flip() end, 100)
+        elseif Player["Yellow"].seated then
+            yellowLetter1 = passedWord.takeObject({position = {-8.89, 1.03, 7.82}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter2 = passedWord.takeObject({position = {-9.52, 1.03, 6.78}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter3 = passedWord.takeObject({position = {-10.10, 1.03, 5.74}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter4 = passedWord.takeObject({position = {-10.69, 1.03, 4.70}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            yellowLetter5 = passedWord.takeObject({position = {-11.27, 1.03, 3.68}, rotation = {x=0.00, y=120.00, z=180.00}, index = 1})
+            Wait.frames(function() yellowLetter1.flip() end, 100)
+        elseif Player["Green"].seated then
+            greenLetter1 = passedWord.takeObject({position = {2.27, 1.03, 11.61}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter2 = passedWord.takeObject({position = {1.13, 1.03, 11.60}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter3 = passedWord.takeObject({position = {-0.05, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter4 = passedWord.takeObject({position = {-1.21, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            greenLetter5 = passedWord.takeObject({position = {-2.20, 1.03, 11.58}, rotation = {x=0.00, y=180.00, z=180.00}, index = 1})
+            Wait.frames(function() greenLetter1.flip() end, 100)
+        elseif Player["Blue"].seated then
+            blueLetter1 = passedWord.takeObject({position = {11.27, 1.03, 3.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter2 = passedWord.takeObject({position = {10.64, 1.03, 4.88}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter3 = passedWord.takeObject({position = {10.04, 1.03, 5.90}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter4 = passedWord.takeObject({position = {9.48, 1.03, 6.84}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            blueLetter5 = passedWord.takeObject({position = {8.91, 1.03, 7.77}, rotation = {x=0.00, y=240.00, z=180.00}, index = 1})
+            Wait.frames(function() blueLetter1.flip() end, 100)
+        end
+    end
+end
+
+function players_2()
+    print("Setting up for two players...")
+    clueCard.setPosition({-5,0.96,0})
+    clueCard.book.setPage(0)
+    redToken1.setPosition({-4.65, 1.5, 1.25})
+    redToken2.setPosition({-4.30, 1.5, 0.60})
+    redToken3.setPosition({-4.65, 1.5, 0.00})
+    redToken4.setPosition({-5.35, 1.5, 0.00})
+    redToken5.setPosition({-5.70, 1.5, 0.65})
+    redToken6.setPosition({-5.35, 1.5, 1.25})
+    greenToken1.setPosition({-5.00, 1.5, 0.95})
+    greenToken2.setPosition({-5.25, 1.5, 0.50})
+    greenToken3.setPosition({-4.75, 1.5, 0.50})
+    greenToken4.setPosition({-5.45, 1.22, -1.15})
+    greenToken5.setPosition({-4.60, 1.22, -1.00})
+    greenToken6.setPosition({-2.39, 2, 3.10})
+    greenToken7.setPosition({-1.84, 2, 3.41})
+    greenToken8.setPosition({-1.87, 2, 3.34})
+    greenToken9.setPosition({-1.90, 2, 3.36})
+    deckTable = deckZone.getObjects()
+    deck = deckTable[1]
+    i = 0
+    if not Player["Red"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({-10.03, 1.32, -5.83})
+        deckTable[2].setRotation({0.00, 60.00, 0.00})
+    end
+    if not Player["Yellow"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({-10.10, 1.32, 5.74})
+        deckTable[2].setRotation({0.00, 120.00, 0.00})
+    end
+    if not Player["Green"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({-0.05, 1.32, 11.58})
+        deckTable[2].setRotation({0.00, 180.00, 0.00})
+    end
+    if not Player["Blue"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({10.04, 1.32, 5.90})
+        deckTable[2].setRotation({0.00, 240.00, 0.00})
+    end
+    if not Player["Pink"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({10.18, 1.32, -5.72})
+        deckTable[2].setRotation({0.00, 300.00, 0.00})
+    end
+    if not Player["White"].seated then
+        presenceChecker2(i)
+        i = i + 1
+        deck = deckTable[1]
+        deckTable[2].setPosition({0.00, 1.32, -11.78})
+        deckTable[2].setRotation({0.00, 0.00, 0.00})
+    end
+
+end
+
+function players_3()
+    print("Setting up for three players...")
+    clueCard.setPosition({-5,0.96,0})
+    clueCard.book.setPage(0)
+    redToken1.setPosition({-4.65, 1.5, 1.25})
+    redToken2.setPosition({-4.30, 1.5, 0.60})
+    redToken3.setPosition({-4.65, 1.5, 0.00})
+    redToken4.setPosition({-5.35, 1.5, 0.00})
+    redToken5.setPosition({-5.70, 1.5, 0.65})
+    redToken6.setPosition({-5.35, 1.5, 1.25})
+    greenToken1.setPosition({-5.00, 1.5, 0.95})
+    greenToken2.setPosition({-5.25, 1.5, 0.50})
+    greenToken3.setPosition({-4.75, 1.5, 0.50})
+    greenToken4.setPosition({-5.45, 1.22, -1.15})
+    greenToken5.setPosition({-4.60, 1.22, -1.00})
+    greenToken6.setPosition({-2.39, 2, 3.10})
+    greenToken7.setPosition({-1.84, 2, 3.41})
+    greenToken8.setPosition({-1.87, 2, 3.34})
+    greenToken9.setPosition({-1.90, 2, 3.36})
+    deckTable = deckZone.getObjects()
+    deck = deckTable[1]
+    i = 0
+    if not Player["Red"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.03, 1.32, -5.83})
+    deckTable[2].setRotation({0.00, 60.00, 0.00})
+    end
+    if not Player["Yellow"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.10, 1.32, 5.74})
+    deckTable[2].setRotation({0.00, 120.00, 0.00})
+    end
+    if not Player["Green"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-0.05, 1.32, 11.58})
+    deckTable[2].setRotation({0.00, 180.00, 0.00})
+    end
+    if not Player["Blue"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.04, 1.32, 5.90})
+    deckTable[2].setRotation({0.00, 240.00, 0.00})
+    end
+    if not Player["Pink"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.18, 1.32, -5.72})
+    deckTable[2].setRotation({0.00, 300.00, 0.00})
+    end
+    if not Player["White"].seated then
+    presenceChecker3(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({0.00, 1.32, -11.78})
+    deckTable[2].setRotation({0.00, 0.00, 0.00})
+    end
+
+end
+
+function players_4()
+    print("Setting up for four players...")
+    clueCard.setPosition({-5,0.96,0})
+    clueCard.book.setPage(2)
+    redToken1.setPosition({-5.33, 1.5, 1.23})
+    redToken2.setPosition({-4.65, 1.5, 1.23})
+    redToken3.setPosition({-4.65, 1.5, 0.53})
+    redToken4.setPosition({-5.33, 1.5, 0.53})
+    redToken5.setPosition({-1.87, 2, 3.34})
+    redToken6.setPosition({-1.90, 2, 3.36})
+    greenToken1.setPosition({-4.98, 1.5, 0.88})
+    greenToken2.setPosition({-5.95, 1.5, -0.44})
+    greenToken3.setPosition({-4.08, 1.5, -0.44})
+    greenToken4.setPosition({-5.68, 1.5, -0.88})
+    greenToken5.setPosition({-4.32, 1.5, -0.85})
+    greenToken6.setPosition({-5.32, 1.5, -1.20})
+    greenToken7.setPosition({-4.70, 1.5, -1.15})
+    greenToken8.setPosition({-1.87, 2, 3.34})
+    greenToken9.setPosition({-1.90, 2, 3.36})
+    deckTable = deckZone.getObjects()
+    deck = deckTable[1]
+    i = 0
+    if not Player["Red"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.03, 1.32, -5.83})
+    deckTable[2].setRotation({0.00, 60.00, 0.00})
+    end
+    if not Player["Yellow"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.10, 1.32, 5.74})
+    deckTable[2].setRotation({0.00, 120.00, 0.00})
+    end
+    if not Player["Green"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-0.05, 1.32, 11.58})
+    deckTable[2].setRotation({0.00, 180.00, 0.00})
+    end
+    if not Player["Blue"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.04, 1.32, 5.90})
+    deckTable[2].setRotation({0.00, 240.00, 0.00})
+    end
+    if not Player["Pink"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.18, 1.32, -5.72})
+    deckTable[2].setRotation({0.00, 300.00, 0.00})
+    end
+    if not Player["White"].seated then
+    presenceChecker4(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({0.00, 1.32, -11.78})
+    deckTable[2].setRotation({0.00, 0.00, 0.00})
+    end
+end
+
+function players_5()
+    print("Setting up for five players...")
+    clueCard.setPosition({-5,0.96,0})
+    clueCard.book.setPage(4)
+    redToken1.setPosition({-4.92, 1.5, 1.39})
+    redToken2.setPosition({-5.40, 1.5, 1.09})
+    redToken3.setPosition({-4.45, 1.5, 1.02})
+    redToken4.setPosition({-5.24, 1.5, 0.51})
+    redToken5.setPosition({-4.64, 1.5, 0.47})
+    redToken6.setPosition({-1.90, 2, 3.36})
+    greenToken1.setPosition({-4.92, 1.5, 0.90})
+    greenToken2.setPosition({-5.78, 1.5, -0.48})
+    greenToken3.setPosition({-5.40, 1.5, -0.79})
+    greenToken4.setPosition({-4.75, 1.5, -1.12})
+    greenToken5.setPosition({-4.33, 1.5, -0.83})
+    greenToken6.setPosition({-4.06, 1.5, -0.44})
+    greenToken7.setPosition({-1.84, 2, 3.41})
+    greenToken8.setPosition({-1.87, 2, 3.34})
+    greenToken9.setPosition({-1.90, 2, 3.36})
+    deckTable = deckZone.getObjects()
+    deck = deckTable[1]
+    i = 0
+    if not Player["Red"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.03, 1.32, -5.83})
+    deckTable[2].setRotation({0.00, 60.00, 0.00})
+    end
+    if not Player["Yellow"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-10.10, 1.32, 5.74})
+    deckTable[2].setRotation({0.00, 120.00, 0.00})
+    end
+    if not Player["Green"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({-0.05, 1.32, 11.58})
+    deckTable[2].setRotation({0.00, 180.00, 0.00})
+    end
+    if not Player["Blue"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.04, 1.32, 5.90})
+    deckTable[2].setRotation({0.00, 240.00, 0.00})
+    end
+    if not Player["Pink"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({10.18, 1.32, -5.72})
+    deckTable[2].setRotation({0.00, 300.00, 0.00})
+    end
+    if not Player["White"].seated then
+    presenceChecker5(i)
+    i = i + 1
+    deck = deckTable[1]
+    deckTable[2].setPosition({0.00, 1.32, -11.78})
+    deckTable[2].setRotation({0.00, 0.00, 0.00})
+    end
+end
+
+function players_6()
+    clueCard.setPosition({-5,0.96,0})
+    clueCard.book.setPage(6)
+    redToken1.setPosition({-5.32, 1.5, 1.28})
+    redToken2.setPosition({-4.78, 1.5, 1.28})
+    redToken3.setPosition({-5.58, 1.5, 0.83})
+    redToken4.setPosition({-4.53, 1.5, 0.83})
+    redToken5.setPosition({-5.30, 1.5, 0.37})
+    redToken6.setPosition({-4.80, 1.5, 0.37})
+    greenToken1.setPosition({-5.05, 1.5, 0.84})
+    greenToken2.setPosition({-5.71, 1.5, -0.91})
+    greenToken3.setPosition({-5.33, 1.5, -1.22})
+    greenToken4.setPosition({-4.53, 1.5, -0.98})
+    greenToken5.setPosition({-4.14, 1.5, -0.66})
+    greenToken6.setPosition({-2.39, 2, 3.10})
+    greenToken7.setPosition({-1.84, 2, 3.41})
+    greenToken8.setPosition({-1.87, 2, 3.34})
+    greenToken9.setPosition({-1.90, 2, 3.36})
+end
+
+function presenceChecker2(i)
+    if i == 3 then
+        deckTable = deck.cut(10)
+    elseif i == 2 then
+        deckTable = deck.cut(9)
+    elseif i == 1 then
+        deckTable = deck.cut(8)
+    elseif i == 0 then
+        deckTable = deck.cut(7)
+    end
+end
+
+function presenceChecker3(i)
+    if i == 2 then
+        deckTable = deck.cut(9)
+    elseif i == 1 then
+        deckTable = deck.cut(8)
+    elseif i == 0 then
+        deckTable = deck.cut(7)
+    end
+end
+
+function presenceChecker4(i)
+    if i == 1 then
+        deckTable = deck.cut(8)
+    elseif i == 0 then
+        deckTable = deck.cut(7)
+    end
+end
+
+function presenceChecker5(i)
+    if i == 0 then
+        deckTable = deck.cut(7)
+    end
+end
+
+function hideDeductionSheet(i)
+    print("How did you get a deduction sheet?")
+end
+
+
+function toggleDeductionSheet(user)
+    local color = user.color
+    active = UI.getAttribute(color .. "DeductionSheet", "active")
+    if active == "false" then
+        UI.setAttribute(color .."DeductionSheet", "active", "true")
+    elseif active == "true" then
+        UI.setAttribute(color .."DeductionSheet", "active", "false")
+    end
+end
+
+function toggleDeductionSheets()
+    toggleDeductionSheet(Player["Red"])
+    toggleDeductionSheet(Player["Yellow"])
+    toggleDeductionSheet(Player["Green"])
+    toggleDeductionSheet(Player["Blue"])
+    toggleDeductionSheet(Player["Pink"])
+    toggleDeductionSheet(Player["White"])
+end
+
+
+
+function redProgress()
+    if setup == 1 and Player["Red"].seated then
+        if redLettersFlipped == 0 then
+            redLetter1.flip()
+            redIndicator1.flip()
+            redLetter2.flip()
+        end
+        if redLettersFlipped == 1 then
+            redLetter2.flip()
+            redIndicator2.flip()
+            redLetter3.flip()
+        end
+        if redLettersFlipped == 2 then
+            redLetter3.flip()
+            redIndicator3.flip()
+            redLetter4.flip()
+        end
+        if redLettersFlipped == 3 then
+            redLetter4.flip()
+            redIndicator4.flip()
+            redLetter5.flip()
+        end
+        if redLettersFlipped == 4 then
+            redLetter5.flip()
+            redIndicator5.flip()
+        end
+        redLettersFlipped = redLettersFlipped + 1
+    end
+end
+
+function yellowProgress()
+    if setup == 1 and Player["Yellow"].seated then
+        if yellowLettersFlipped == 0 then
+            yellowLetter1.flip()
+            yellowIndicator1.flip()
+            yellowLetter2.flip()
+        end
+        if yellowLettersFlipped == 1 then
+            yellowLetter2.flip()
+            yellowIndicator2.flip()
+            yellowLetter3.flip()
+        end
+        if yellowLettersFlipped == 2 then
+            yellowLetter3.flip()
+            yellowIndicator3.flip()
+            yellowLetter4.flip()
+        end
+        if yellowLettersFlipped == 3 then
+            yellowLetter4.flip()
+            yellowIndicator4.flip()
+            yellowLetter5.flip()
+        end
+        if yellowLettersFlipped == 4 then
+            yellowLetter5.flip()
+            yellowIndicator5.flip()
+        end
+        yellowLettersFlipped = yellowLettersFlipped + 1
+    end
+end
+
+function greenProgress()
+    if setup == 1 and Player["Green"].seated then
+        if greenLettersFlipped == 0 then
+            greenLetter1.flip()
+            greenIndicator1.flip()
+            greenLetter2.flip()
+        end
+        if greenLettersFlipped == 1 then
+            greenLetter2.flip()
+            greenIndicator2.flip()
+            greenLetter3.flip()
+        end
+        if greenLettersFlipped == 2 then
+            greenLetter3.flip()
+            greenIndicator3.flip()
+            greenLetter4.flip()
+        end
+        if greenLettersFlipped == 3 then
+            greenLetter4.flip()
+            greenIndicator4.flip()
+            greenLetter5.flip()
+        end
+        if greenLettersFlipped == 4 then
+            greenLetter5.flip()
+            greenIndicator5.flip()
+        end
+        greenLettersFlipped = greenLettersFlipped + 1
+    end
+end
+
+function blueProgress()
+    if setup == 1 and Player["Blue"].seated then
+        if blueLettersFlipped == 0 then
+            blueLetter1.flip()
+            blueIndicator1.flip()
+            blueLetter2.flip()
+        end
+        if blueLettersFlipped == 1 then
+            blueLetter2.flip()
+            blueIndicator2.flip()
+            blueLetter3.flip()
+        end
+        if blueLettersFlipped == 2 then
+            blueLetter3.flip()
+            blueIndicator3.flip()
+            blueLetter4.flip()
+        end
+        if blueLettersFlipped == 3 then
+            blueLetter4.flip()
+            blueIndicator4.flip()
+            blueLetter5.flip()
+        end
+        if blueLettersFlipped == 4 then
+            blueLetter5.flip()
+            blueIndicator5.flip()
+        end
+        blueLettersFlipped = blueLettersFlipped + 1
+    end
+end
+
+function pinkProgress()
+    if setup == 1 and Player["Pink"].seated then
+        if pinkLettersFlipped == 0 then
+            pinkLetter1.flip()
+            pinkIndicator1.flip()
+            pinkLetter2.flip()
+        end
+        if pinkLettersFlipped == 1 then
+            pinkLetter2.flip()
+            pinkIndicator2.flip()
+            pinkLetter3.flip()
+        end
+        if pinkLettersFlipped == 2 then
+            pinkLetter3.flip()
+            pinkIndicator3.flip()
+            pinkLetter4.flip()
+        end
+        if pinkLettersFlipped == 3 then
+            pinkLetter4.flip()
+            pinkIndicator4.flip()
+            pinkLetter5.flip()
+        end
+        if pinkLettersFlipped == 4 then
+            pinkLetter5.flip()
+            pinkIndicator5.flip()
+        end
+        pinkLettersFlipped = pinkLettersFlipped + 1
+    end
+end
+
+function whiteProgress()
+    if setup == 1 and Player["White"].seated then
+        if whiteLettersFlipped == 0 then
+            whiteLetter1.flip()
+            whiteIndicator1.flip()
+            whiteLetter2.flip()
+        end
+        if whiteLettersFlipped == 1 then
+            whiteLetter2.flip()
+            whiteIndicator2.flip()
+            whiteLetter3.flip()
+        end
+        if whiteLettersFlipped == 2 then
+            whiteLetter3.flip()
+            whiteIndicator3.flip()
+            whiteLetter4.flip()
+        end
+        if whiteLettersFlipped == 3 then
+            whiteLetter4.flip()
+            whiteIndicator4.flip()
+            whiteLetter5.flip()
+        end
+        if whiteLettersFlipped == 4 then
+            whiteLetter5.flip()
+            whiteIndicator5.flip()
+        end
+        whiteLettersFlipped = whiteLettersFlipped + 1
+    end
+end
